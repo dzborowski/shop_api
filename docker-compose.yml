@@ -1,0 +1,22 @@
+version: '3'
+services:
+  api:
+    restart: always
+    build: .
+    env_file:
+      - .env
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/usr/shop_api/node
+    depends_on:
+      - postgres
+  postgres:
+    image: 'postgres:11.2-alpine'
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - /usr/shop_api/postgresql:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
