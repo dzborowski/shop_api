@@ -6,17 +6,20 @@ services:
     env_file:
       - .env
     ports:
-      - '3000:3000'
+      - '${API_OUTER_PORT}:${API_INNER_PORT}'
     volumes:
-      - .:/usr/shop_api/node
+      - .:/usr/shop_api
     depends_on:
       - postgres
   postgres:
-    image: 'postgres:11.2-alpine'
+    image: 'postgres:13.0-alpine'
     restart: always
     env_file:
       - .env
     volumes:
-      - /usr/shop_api/postgresql:/var/lib/postgresql/data
+      - shop_api_db:/var/lib/postgresql/data
     ports:
-      - '5432:5432'
+      - '${POSTGRES_OUTER_PORT}:${POSTGRES_INNER_PORT}'
+
+volumes:
+  shop_api_db:

@@ -1,14 +1,12 @@
-FROM node:12.19.0-alpine
+FROM node:14.15.0-alpine3.10
 
-WORKDIR /usr/shop_api/node
+WORKDIR /usr/shop_api
 
-COPY package.json ./
-COPY yarn.lock ./
+COPY ["package.json", "."]
+COPY ["package-lock.json", "."]
 
 RUN npm ci
 
 COPY . .
 
-EXPOSE 3000
-
-CMD ["yarn", "run", "dev"]
+CMD ["npm", "run", "dev"]
