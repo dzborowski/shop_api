@@ -6,9 +6,9 @@ import * as schema from "./schema";
 
 const service = new UserController(User);
 const config: IRouterConfig = {
-    prefix: "/users",
-    createObj: schema.createBody,
-    updateObj: schema.updateBody,
+  prefix: "/users",
+  createObj: schema.createBody,
+  updateObj: schema.updateBody,
 };
 const router = getCrudRouter(service, config);
 
