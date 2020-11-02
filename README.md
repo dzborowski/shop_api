@@ -36,15 +36,3 @@ yarn run migration:run
 ```
 yarn run migration:generate <migration_name>
 ```
-
-###### Tslint fix:
-
-```
-yarn run tslint-fix
-```
-
-###### Prettier fix:
-
-```
-yarn run prettier-fix
-```

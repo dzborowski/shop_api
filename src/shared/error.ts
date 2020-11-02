@@ -2,11 +2,11 @@ class RouteError extends Error {
   public status: number
 
   constructor(message: string, status: number) {
-    super(message)
+      super(message);
 
-    this.status = status
-    Error.captureStackTrace(this, RouteError)
+      this.status = status;
+      Error.captureStackTrace(this, RouteError);
   }
 }
 
-export default RouteError
+export default RouteError;
