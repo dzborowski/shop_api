@@ -4,7 +4,7 @@ const router = Router();
 
 router.route("/")
     .get((req: Request, res: Response) => {
-        res.status(200).send("product");
+      res.status(200).send("product");
     });
 
 export default router;

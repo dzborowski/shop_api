@@ -18,51 +18,51 @@ abstract class CurdController<T> {
         this.isExist = this.isExist.bind(this);
     }
 
-  public async getAll(req: Request, res: Response) {
-      const data = await getRepository(this.model).find();
-      res.status(200).json(data);
-  }
-
-  public async getOne(req: Request, res: Response) {
-      const data = await this.isExist(req.params.id);
-      res.status(200).json(data);
-  }
-
-  public async create(req: Request, res: Response) {
-      const obj: FindConditions<T> = req.body;
-      const repo = getRepository(this.model);
-      const isExist = await repo.findOne(obj);
-
-      if (isExist) {
-          const name = await repo.metadata.targetName;
-          throw new RouteError(`${name} already exist!`, 400);
-      }
-
-      const data = await repo.save(req.body);
-      res.status(201).json(data);
-  }
-
-  public async update(req: Request, res: Response) {
-      const id = req.params.id;
-      await this.isExist(id);
-      await getRepository(this.model).update(id, req.body);
-      res.status(200).end();
-  }
-
-  public async delete(req: Request, res: Response) {
-      const id = req.params.id;
-      await this.isExist(id);
-      await getRepository(this.model).delete(id);
-      res.status(200).end();
-  }
-
-  public async isExist(obj: FindConditions<T>): Promise<T | RouteError> {
-    try {
-        return await getRepository(this.model).findOneOrFail(obj);
-    } catch (err) {
-        throw new RouteError(err.message, 404);
+    public async getAll(req: Request, res: Response) {
+        const data = await getRepository(this.model).find();
+        res.status(200).json(data);
     }
-  }
+
+    public async getOne(req: Request, res: Response) {
+        const data = await this.isExist(req.params.id);
+        res.status(200).json(data);
+    }
+
+    public async create(req: Request, res: Response) {
+        const obj: FindConditions<T> = req.body;
+        const repo = getRepository(this.model);
+        const isExist = await repo.findOne(obj);
+
+        if (isExist) {
+            const name = await repo.metadata.targetName;
+            throw new RouteError(`${name} already exist!`, 400);
+        }
+
+        const data = await repo.save(req.body);
+      res.status(201).json(data);
+    }
+
+    public async update(req: Request, res: Response) {
+        const id = req.params.id;
+        await this.isExist(id);
+        await getRepository(this.model).update(id, req.body);
+        res.status(200).end();
+    }
+
+    public async delete(req: Request, res: Response) {
+        const id = req.params.id;
+        await this.isExist(id);
+        await getRepository(this.model).delete(id);
+        res.status(200).end();
+    }
+
+    public async isExist(obj: FindConditions<T>): Promise<T | RouteError> {
+        try {
+            return await getRepository(this.model).findOneOrFail(obj);
+        } catch (err) {
+            throw new RouteError(err.message, 404);
+        }
+    }
 }
 
 export default CurdController;
