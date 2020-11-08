@@ -1,9 +1,9 @@
 import * as handler from "express-async-handler";
 import {Router} from "express";
 import {celebrate} from "celebrate";
-import * as schema from "./../routes/user/schema";
-import RouteError from "./../shared/error";
-import {AUTH_MISS, OPEN_ROUTES} from "./../shared/constants";
+import * as schema from "../user/schema";
+import RouteError from "../common/error";
+import {AUTH_MISS, OPEN_ROUTES} from "../common/constants";
 
 class Auth {
   public static isAuth(req, res, next) {

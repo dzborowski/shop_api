@@ -1,10 +1,10 @@
-import User from "./User";
 import {Request, Response} from "express";
+import {UserEntity} from "./UserEntity";
 
 export class UserController {
-    public user: User;
+    public user: UserEntity;
 
-  public async create = (req: Request, res: Response) => {
+    public create = async (request: Request, response: Response) => {
     // const data = req.body;
     // const repo = getRepository(User);
     // const isExist = await repo.findOne({email: data.email});
@@ -16,6 +16,6 @@ export class UserController {
     // const password = await bcrypt.hash(data.password, SALT_ROUNDS);
     // const user = await repo.save({...data, password});
     // res.status(200).json(user);
-  }
+    }
 }
 
