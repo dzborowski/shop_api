@@ -1,38 +1,17 @@
-# API Project Build with Express and TypeORM
-
-## Steps to run this project:
-
-1. Setup environmental variables inside `.env` file and run API via docker or locally
-2. Run `yarn install` command if you want run API locally
-
-###### Docker:
-Currently only the developer version is available
+## Run project:
 
 ```
 docker-compose up
 ```
 
-###### Local production:
+##### Run migrations:
 
 ```
-yarn run prod
+npm run migration:run
 ```
 
-###### Local development:
+##### Generate migration:
 
 ```
-yarn run dev
-```
-
-###### Run migrations locally - optional:
-Currently migrations are started automatically after API startup
-
-```
-yarn run migration:run
-```
-
-###### Generate migration:
-
-```
-yarn run migration:generate <migration_name>
+npm run migration:generate <migration_name>
 ```

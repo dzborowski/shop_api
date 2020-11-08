@@ -26,6 +26,9 @@
     "quotes": [
       "error",
       "double"
-    ]
+    ],
+    "no-unused-vars": "off",
+    "require-jsdoc": "off",
+    "new-cap": "off"
   }
 }
