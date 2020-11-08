@@ -7,8 +7,6 @@ import {UserSchema} from "./UserSchema";
 
 export const UserRouter = Router();
 
-UserRouter.route("user");
-
 UserRouter
     .route("/")
     .post(celebrate({body: UserSchema.create}), asyncHandler(UserController.createUser));
