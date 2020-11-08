@@ -19,17 +19,4 @@ export class UserSchema {
           .min(6)
           .required(),
     });
-
-    public static update = Joi.object().keys({
-      firstName: Joi.string()
-          .alphanum()
-          .min(2)
-          .max(30),
-      lastName: Joi.string()
-          .alphanum()
-          .min(2)
-          .max(30),
-      email: Joi.string().email(),
-      password: Joi.string().min(6),
-    });
 }

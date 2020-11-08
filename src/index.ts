@@ -15,7 +15,7 @@ createConnection()
       app.use(bodyParser.json());
       app.use(bodyParser.urlencoded({extended: false}));
 
-      app.use("api/user", UserRouter);
+      app.use("api/", UserRouter);
 
       app.use((err, req, res, next) => {
         const errorMessage = err.message || err;
