@@ -5,8 +5,8 @@ WORKDIR /usr/shop_api
 COPY ["package.json", "."]
 COPY ["package-lock.json", "."]
 
-RUN npm ci
+RUN ["npm", "ci"]
 
 COPY . .
 
-CMD ["npm", "run", "dev"]
+CMD ["npm", "run", "prod:start"]

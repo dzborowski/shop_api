@@ -1,3 +1,4 @@
+/*
 import {FindConditions, getRepository} from "typeorm";
 import {Request, Response} from "express";
 import RouteError from "./error";
@@ -64,5 +65,4 @@ abstract class CurdController<T> {
       }
     }
 }
-
-export default CurdController;
+*/

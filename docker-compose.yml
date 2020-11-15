@@ -7,8 +7,6 @@ services:
       - .env
     ports:
       - '${API_OUTER_PORT}:${API_INNER_PORT}'
-    volumes:
-      - .:/usr/shop_api
     depends_on:
       - postgres
   postgres:

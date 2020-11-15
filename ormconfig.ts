@@ -7,14 +7,12 @@ module.exports = {
   database: process.env.POSTGRES_DB,
   synchronize: false,
   logging: false,
-  // entities: [
-  //       process.env.NODE_ENV === "prod" ? "build/src/entity/**/*.js" : "src/entity/**/*.ts",
-  // ],
-  // migrations: [
-  //       process.env.NODE_ENV === "prod" ? "build/src/migration/**/*.js" : "src/migration/**/*.ts",
-  // ],
-  // cli: {
-  //   entitiesDir: "src/entity",
-  //   migrationsDir: "src/migration",
-  // },
+  entities: [
+    "src/**/*.ts",
+    "build/src/**/migration/*.js",
+  ],
+  migrations: [
+    "src/**/migration/*.ts",
+    "build/src/**/migration/*.js",
+  ],
 };

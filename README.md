@@ -13,5 +13,5 @@ npm run migration:run
 ##### Generate migration:
 
 ```
-npm run migration:generate <migration_name>
+npm run migration:generate -- -n UserEntity -d src/user/migration
 ```
