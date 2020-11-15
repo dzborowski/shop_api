@@ -1,3 +1,5 @@
+import {join} from "path";
+
 module.exports = {
   type: "postgres",
   host: process.env.POSTGRES_HOST,
@@ -8,11 +10,9 @@ module.exports = {
   synchronize: false,
   logging: false,
   entities: [
-    "src/**/*.ts",
-    "build/src/**/migration/*.js",
+    join(__dirname, "src", "**", "*.{ts,js}"),
   ],
   migrations: [
-    "src/**/migration/*.ts",
-    "build/src/**/migration/*.js",
+    join(__dirname, "src", "**", "migration", "*.{ts,js}"),
   ],
 };
