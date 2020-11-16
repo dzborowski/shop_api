@@ -29,7 +29,7 @@
     "typeorm": "^0.2.28"
   },
   "scripts": {
-    "dev:start": "nodemon --watch ./build ./build/src/index.js",
+    "dev:start": "nodemon --delay 10ms --watch ./build ./build/src/index.js",
     "dev:build": "tsc --watch --incremental",
     "prod:start": "npm run build && node ./build/src/index.js",
     "prod:build": "rm -rf ./build && tsc",
