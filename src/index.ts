@@ -4,7 +4,7 @@ import * as express from "express";
 import * as helmet from "helmet";
 import * as bodyParser from "body-parser";
 import {UserRouter} from "./user/UserRouter";
-import {AuthenticationRouter} from "./authentication/AuthenticationRouter";
+import {AuthRouter} from "./auth/AuthRouter";
 
 createConnection()
     .then(() => {
@@ -14,7 +14,7 @@ createConnection()
       app.use(bodyParser.json());
       app.use(bodyParser.urlencoded({extended: false}));
 
-      app.use("/api/authentication", AuthenticationRouter);
+      app.use("/api/auth", AuthRouter);
       app.use("/api/users", UserRouter);
 
       app.use((err, req, res, next) => {
