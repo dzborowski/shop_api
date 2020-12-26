@@ -14,7 +14,7 @@ export class UserEntity extends BaseEntity {
   @Column({type: "varchar", length: 255, unique: true})
   public email: string
 
-  @Column({type: "varchar", length: 255, select: false})
+  @Column({type: "varchar", length: 255})
   public password: string;
 
   @CreateDateColumn({type: "timestamp"})

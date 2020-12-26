@@ -1,10 +1,11 @@
 import {getRepository} from "typeorm";
 import * as bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
+import * as jwt from "jsonwebtoken";
 import {UserEntity} from "../user/UserEntity";
 import {IAuthLoginTokens} from "./IAuthLoginTokens";
 import {AuthTokenType} from "./AuthTokenType";
 import {IAuthTokenPayload} from "./IAuthTokenPayload";
+import {NextFunction, Request, Response} from "express";
 
 export class AuthService {
     protected static USER_PASSWORD_SALT_ROUNDS = 12;
@@ -31,7 +32,7 @@ export class AuthService {
         throw new Error("User with provided email didn't exits.");
       }
 
-      const isPasswordMatch = bcrypt.compare(password, user.password);
+      const isPasswordMatch = await bcrypt.compare(password, user.password);
 
       if (!isPasswordMatch) {
         throw new Error("Password didn't match.");
@@ -40,13 +41,29 @@ export class AuthService {
       return this.generateLoginTokens(user);
     }
 
-    public async verifyAccessToken(accessToken:string) {
-      const parsedAccessToken = this.getParsedToken(accessToken);
-      jwt.verify(parsedAccessToken.credentials, process.env.JWT_SECRET);
+    public static async verifyAccessToken(req: Request, res: Response, next: NextFunction) {
+      const accessToken = req.headers.authorization;
+      const parsedAccessToken = AuthService.getParsedToken(accessToken);
+
+      try {
+        const payload = jwt.verify(parsedAccessToken.credentials, process.env.JWT_SECRET) as IAuthTokenPayload;
+        const userRepository = getRepository(UserEntity);
+        const user = await userRepository.findOne({id: payload.userId});
+
+        if (!user) {
+          next("User didn't exits.");
+        }
+
+        // @ts-ignore
+        req.user = user;
+        next();
+      } catch (err) {
+        next(err);
+      }
     }
 
     public async refreshAccessToken(refreshToken:string): Promise<IAuthLoginTokens> {
-      const parsedRefreshToken = this.getParsedToken(refreshToken);
+      const parsedRefreshToken = AuthService.getParsedToken(refreshToken);
       const payload = jwt.verify(parsedRefreshToken.credentials, process.env.JWT_SECRET) as IAuthTokenPayload;
       const userRepository = getRepository(UserEntity);
       const user = await userRepository.findOne({id: payload.userId});
@@ -80,7 +97,7 @@ export class AuthService {
       return {accessToken, refreshToken};
     }
 
-    protected getParsedToken(token:string):{type:string; credentials:string} {
+    protected static getParsedToken(token:string):{type:string; credentials:string} {
       if (!token) {
         throw new Error("Token is missing.");
       }

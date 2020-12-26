@@ -5,6 +5,7 @@ import * as helmet from "helmet";
 import * as bodyParser from "body-parser";
 import {UserRouter} from "./user/UserRouter";
 import {AuthRouter} from "./auth/AuthRouter";
+import {AuthService} from "./auth/AuthService";
 
 createConnection()
     .then(() => {
@@ -15,7 +16,7 @@ createConnection()
       app.use(bodyParser.urlencoded({extended: false}));
 
       app.use("/api/auth", AuthRouter);
-      app.use("/api/users", UserRouter);
+      app.use("/api/users", AuthService.verifyAccessToken, UserRouter);
 
       app.use((err, req, res, next) => {
         const errorMessage = err.message || err;
