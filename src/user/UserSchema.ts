@@ -1,7 +1,7 @@
 import * as Joi from "joi";
 
 export class UserSchema {
-    public static create = Joi.object().keys({
+    public static createUser = Joi.object().keys({
       firstName: Joi.string()
           .alphanum()
           .min(2)
@@ -17,6 +17,11 @@ export class UserSchema {
           .required(),
       password: Joi.string()
           .min(6)
+          .max(30)
           .required(),
+    });
+
+    public static getUser = Joi.object().keys({
+      id: Joi.string().uuid().required(),
     });
 }

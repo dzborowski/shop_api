@@ -7,6 +7,7 @@ export class AuthenticationSchema {
           .required(),
       password: Joi.string()
           .min(6)
+          .max(30)
           .required(),
     });
 }

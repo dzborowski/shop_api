@@ -1,26 +1,25 @@
 import {Request, Response} from "express";
-import {UserEntity} from "./UserEntity";
+import {UserService} from "./UserService";
 
 export class UserController {
-    public user: UserEntity;
-
     public static createUser = async (request: Request, response: Response) => {
-    // const data = req.body;
-    // const repo = getRepository(User);
-    // const isExist = await repo.findOne({email: data.email});
-    //
-    // if (isExist) {
-    //   throw new RouteError(USER_EXIST, 400);
-    // }
-    //
-    // const password = await bcrypt.hash(data.password, SALT_ROUNDS);
-    // const user = await repo.save({...data, password});
-    //   response.status(200).json(user);
-      response.status(201).send("created");
+      const userService = new UserService();
+      const user = await userService.createUser(request.body);
+
+      delete user.password;
+      response.status(200).json(user);
     }
 
     public static getUser = async (request: Request, response: Response) => {
-      response.status(200).send("user");
+      const userService = new UserService();
+      const user = await userService.getUser(request.params.id);
+
+      if (user) {
+        delete user.password;
+        response.status(200).json(user);
+      } else {
+        response.status(404).end();
+      }
     }
 }
 

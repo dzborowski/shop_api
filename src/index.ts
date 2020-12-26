@@ -4,18 +4,18 @@ import * as express from "express";
 import * as helmet from "helmet";
 import * as bodyParser from "body-parser";
 import {UserRouter} from "./user/UserRouter";
+import {AuthenticationRouter} from "./authentication/AuthenticationRouter";
 
 createConnection()
-    .then(async (connection) => {
-      await connection.runMigrations();
-
+    .then(() => {
       const app = express();
 
       app.use(helmet());
       app.use(bodyParser.json());
       app.use(bodyParser.urlencoded({extended: false}));
 
-      app.use("/api/user", UserRouter);
+      app.use("/api/authentication", AuthenticationRouter);
+      app.use("/api/users", UserRouter);
 
       app.use((err, req, res, next) => {
         const errorMessage = err.message || err;

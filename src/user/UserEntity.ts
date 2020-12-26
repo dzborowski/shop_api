@@ -2,8 +2,8 @@ import {BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, Up
 
 @Entity({name: "user"})
 export class UserEntity extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  public id: number;
+  @PrimaryGeneratedColumn("uuid")
+  public id: string;
 
   @Column({type: "varchar", length: 255})
   public firstName: string;
