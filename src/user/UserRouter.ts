@@ -8,4 +8,4 @@ export const UserRouter = Router();
 
 UserRouter
     .route("/:id")
-    .get(celebrate({params: UserSchema.getUser}), asyncHandler(UserController.getUser));
+    .get(celebrate({params: UserSchema.getUserParams}), asyncHandler(UserController.getUser));

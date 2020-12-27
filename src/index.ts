@@ -8,6 +8,7 @@ import {UserRouter} from "./user/UserRouter";
 import {AuthRouter} from "./auth/AuthRouter";
 import {AuthService} from "./auth/AuthService";
 import {ErrorHandler} from "./common/ErrorHandler";
+import {ProductRouter} from "./product/ProductRouter";
 
 createConnection()
     .then(() => {
@@ -19,6 +20,7 @@ createConnection()
 
       app.use("/api/auth", AuthRouter);
       app.use("/api/users", asyncHandler(AuthService.verifyAuth), UserRouter);
+      app.use("/api/products", ProductRouter);
 
       app.use(ErrorHandler.handleError);
 
