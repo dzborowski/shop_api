@@ -1,0 +1,7 @@
+entity: product
+items:
+  post{1..10}:
+    name: 'Product($current) title'
+    description: 'Product($current) description'
+    price: 5.5
+    availableCopiesQuantity: 1
