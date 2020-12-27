@@ -9,4 +9,6 @@ RUN ["npm", "ci"]
 
 COPY . .
 
+RUN ["npm", "run", "prod:build"]
+
 CMD ["npm", "run", "prod:start"]
