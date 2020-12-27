@@ -17,6 +17,5 @@ export class ErrorHandler {
     }
 
     res.status(errorHttpCode).json({errorMessage});
-    res.send("errorMessage");
   }
 }
