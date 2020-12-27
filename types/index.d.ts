@@ -1,5 +1,5 @@
 declare namespace Express {
     export interface Request {
-        user?: any
+        user: null | import("../src/user/UserEntity").UserEntity
     }
 }

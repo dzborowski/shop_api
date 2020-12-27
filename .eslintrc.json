@@ -29,6 +29,7 @@
     ],
     "no-unused-vars": "off",
     "require-jsdoc": "off",
-    "new-cap": "off"
+    "new-cap": "off",
+    "no-undef": "off"
   }
 }

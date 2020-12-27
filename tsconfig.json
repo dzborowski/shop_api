@@ -12,5 +12,5 @@
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true
   },
-  "include": ["./src","./types"]
+  "include": ["./src", "./ormconfig.ts","./types"]
 }
