@@ -7,14 +7,14 @@ export class AuthController {
       const user = await authService.register(req.body);
 
       delete user.password;
-      res.status(200).json(user);
+      res.json(user);
     }
 
     public static login = async (req: Request, res: Response) => {
       const authService = new AuthService();
       const authTokens = await authService.login(req.body.email, req.body.password);
 
-      res.status(200).json(authTokens);
+      res.json(authTokens);
     }
 
     public static refresh = async (req: Request, res: Response) => {
@@ -22,6 +22,6 @@ export class AuthController {
       const authService = new AuthService();
       const authTokens = await authService.refreshAccessToken(refreshToken);
 
-      res.status(200).json(authTokens);
+      res.json(authTokens);
     }
 }

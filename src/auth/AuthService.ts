@@ -6,6 +6,8 @@ import {IAuthLoginTokens} from "./IAuthLoginTokens";
 import {AuthTokenType} from "./AuthTokenType";
 import {IAuthTokenPayload} from "./IAuthTokenPayload";
 import {NextFunction, Request, Response} from "express";
+import {ApiError} from "../common/ApiError";
+import {HttpCode} from "../common/HttpCode";
 
 export class AuthService {
     protected static USER_PASSWORD_SALT_ROUNDS = 12;
@@ -16,7 +18,7 @@ export class AuthService {
       const isUserAlreadyExist = await userRepository.findOne({email: userData.email});
 
       if (isUserAlreadyExist) {
-        throw new Error("User with provided email already exits.");
+        throw new ApiError({message: "User with provided email already exits.", httpCode: HttpCode.BAD_REQUEST});
       }
 
       const hashedPassword = await bcrypt.hash(userData.password, AuthService.USER_PASSWORD_SALT_ROUNDS);
@@ -29,37 +31,31 @@ export class AuthService {
       const user = await userRepository.findOne({email});
 
       if (!user) {
-        throw new Error("User with provided email didn't exits.");
+        throw new ApiError({message: "User with provided email didn't exits.", httpCode: HttpCode.BAD_REQUEST});
       }
 
       const isPasswordMatch = await bcrypt.compare(password, user.password);
 
       if (!isPasswordMatch) {
-        throw new Error("Password didn't match.");
+        throw new ApiError({message: "Password didn't match.", httpCode: HttpCode.BAD_REQUEST});
       }
 
       return this.generateLoginTokens(user);
     }
 
-    public static async verifyAccessToken(req: Request, res: Response, next: NextFunction) {
+    public static async verifyAuth(req: Request, res: Response, next:NextFunction) {
       const accessToken = req.headers.authorization;
       const parsedAccessToken = AuthService.getParsedToken(accessToken);
+      const payload = jwt.verify(parsedAccessToken.credentials, process.env.JWT_SECRET) as IAuthTokenPayload;
+      const userRepository = getRepository(UserEntity);
+      const user = await userRepository.findOne({id: payload.userId});
 
-      try {
-        const payload = jwt.verify(parsedAccessToken.credentials, process.env.JWT_SECRET) as IAuthTokenPayload;
-        const userRepository = getRepository(UserEntity);
-        const user = await userRepository.findOne({id: payload.userId});
-
-        if (!user) {
-          next("User didn't exits.");
-        }
-
-        // @ts-ignore
-        req.user = user;
-        next();
-      } catch (err) {
-        next(err);
+      if (!user) {
+        throw new ApiError({message: "User didn't exits.", httpCode: HttpCode.NOT_FOUND});
       }
+
+      req.user = user;
+      next();
     }
 
     public async refreshAccessToken(refreshToken:string): Promise<IAuthLoginTokens> {
@@ -69,7 +65,7 @@ export class AuthService {
       const user = await userRepository.findOne({id: payload.userId});
 
       if (!user) {
-        throw new Error("User didn't exits.");
+        throw new ApiError({message: "User didn't exits.", httpCode: HttpCode.NOT_FOUND});
       }
 
       return this.generateLoginTokens(user);
@@ -99,13 +95,16 @@ export class AuthService {
 
     protected static getParsedToken(token:string):{type:string; credentials:string} {
       if (!token) {
-        throw new Error("Token is missing.");
+        throw new ApiError({message: "Token is missing.", httpCode: HttpCode.BAD_REQUEST});
       }
 
       const [type, credentials] = token.split(" ");
 
       if (type !== AuthService.AUTHORIZATION_TYPE) {
-        throw new Error(`Invalid token authorization type, ${AuthService.AUTHORIZATION_TYPE} is required.`);
+        throw new ApiError({
+          message: `Invalid token authorization type, ${AuthService.AUTHORIZATION_TYPE} is required.`,
+          httpCode: HttpCode.BAD_REQUEST,
+        });
       }
 
       return {type, credentials};

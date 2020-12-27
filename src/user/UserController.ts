@@ -1,5 +1,6 @@
 import {Request, Response} from "express";
 import {UserService} from "./UserService";
+import {HttpCode} from "../common/HttpCode";
 
 export class UserController {
     public static getUser = async (req: Request, res: Response) => {
@@ -8,9 +9,9 @@ export class UserController {
 
       if (user) {
         delete user.password;
-        res.status(200).json(user);
+        res.json(user);
       } else {
-        res.status(404).end();
+        res.status(HttpCode.NOT_FOUND).end();
       }
     }
 }

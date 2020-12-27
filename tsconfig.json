@@ -11,5 +11,6 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true
-  }
+  },
+  "include": ["./src","./types"]
 }

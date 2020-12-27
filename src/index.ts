@@ -3,9 +3,11 @@ import {createConnection} from "typeorm";
 import * as express from "express";
 import * as helmet from "helmet";
 import * as bodyParser from "body-parser";
+import * as asyncHandler from "express-async-handler";
 import {UserRouter} from "./user/UserRouter";
 import {AuthRouter} from "./auth/AuthRouter";
 import {AuthService} from "./auth/AuthService";
+import {ErrorHandler} from "./common/ErrorHandler";
 
 createConnection()
     .then(() => {
@@ -16,17 +18,12 @@ createConnection()
       app.use(bodyParser.urlencoded({extended: false}));
 
       app.use("/api/auth", AuthRouter);
-      app.use("/api/users", AuthService.verifyAccessToken, UserRouter);
+      app.use("/api/users", asyncHandler(AuthService.verifyAuth), UserRouter);
 
-      app.use((err, req, res, next) => {
-        const errorMessage = err.message || err;
-        const errorStatus = err.status || 500;
-
-        res.status(errorStatus).send(errorMessage);
-      });
+      app.use(ErrorHandler.handleError);
 
       app.listen(process.env.API_INNER_PORT, () => {
-        console.log(`Example app listening at http://localhost:${process.env.API_INNER_PORT}`);
+        console.log(`App listening at http://localhost:${process.env.API_INNER_PORT}`);
       });
     })
-    .catch((err) => console.error(`TypeORM connection error: ${err}`));
+    .catch((err) => console.error(`Database connection error: ${err}`));
