@@ -1,12 +1,12 @@
 version: '3'
 services:
-  api:
+  app:
     restart: always
     build: .
     env_file:
       - .env
     ports:
-      - '${API_OUTER_PORT}:${API_INNER_PORT}'
+      - '${APP_PORT}:${APP_PORT}'
     depends_on:
       - postgres
   postgres:
@@ -17,7 +17,7 @@ services:
     volumes:
       - shop_api_db:/var/lib/postgresql/data
     ports:
-      - '${POSTGRES_OUTER_PORT}:${POSTGRES_INNER_PORT}'
+      - '${POSTGRES_PORT}:${POSTGRES_PORT}'
 
 volumes:
   shop_api_db:

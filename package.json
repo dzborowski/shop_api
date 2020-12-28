@@ -32,11 +32,11 @@
     "typeorm-fixtures-cli": "^1.9.0"
   },
   "scripts": {
-    "dev:start": "nodemon --delay 10ms --watch ./build ./build/src/index.js",
+    "dev:start": "nodemon --delay 10ms --watch ./build ./build/App.js",
     "dev:build": "tsc --watch --incremental",
-    "prod:start": "node ./build/src/index.js",
+    "prod:start": "node ./build/App.js",
     "prod:build": "rm -rf ./build && tsc",
-    "fixtures": "fixtures ./fixtures --config ./build/ormconfig.js",
+    "fixtures": "fixtures ./fixtures --config ./build/OrmConfig.js",
     "eslint:check": "eslint . --ext .ts",
     "eslint:fix": "eslint . --ext .ts --fix"
   }

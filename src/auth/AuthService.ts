@@ -8,6 +8,7 @@ import {IAuthTokenPayload} from "./IAuthTokenPayload";
 import {NextFunction, Request, Response} from "express";
 import {ApiError} from "../common/ApiError";
 import {HttpCode} from "../common/HttpCode";
+import {AppConfig} from "../AppConfig";
 
 export class AuthService {
     protected static USER_PASSWORD_SALT_ROUNDS = 12;
@@ -46,7 +47,7 @@ export class AuthService {
     public static async verifyAuth(req: Request, res: Response, next:NextFunction) {
       const accessToken = req.headers.authorization;
       const parsedAccessToken = AuthService.getParsedToken(accessToken);
-      const payload = jwt.verify(parsedAccessToken.credentials, process.env.JWT_SECRET) as IAuthTokenPayload;
+      const payload = jwt.verify(parsedAccessToken.credentials, AppConfig.getJwtSecret()) as IAuthTokenPayload;
       const userRepository = getRepository(UserEntity);
       const user = await userRepository.findOne({id: payload.userId});
 
@@ -60,7 +61,7 @@ export class AuthService {
 
     public async refreshAccessToken(refreshToken:string): Promise<IAuthLoginTokens> {
       const parsedRefreshToken = AuthService.getParsedToken(refreshToken);
-      const payload = jwt.verify(parsedRefreshToken.credentials, process.env.JWT_SECRET) as IAuthTokenPayload;
+      const payload = jwt.verify(parsedRefreshToken.credentials, AppConfig.getJwtSecret()) as IAuthTokenPayload;
       const userRepository = getRepository(UserEntity);
       const user = await userRepository.findOne({id: payload.userId});
 
@@ -73,12 +74,13 @@ export class AuthService {
 
     protected async generateLoginTokens(user:UserEntity):Promise<IAuthLoginTokens> {
       const userId = user.id;
+      const jwtSecret= AppConfig.getJwtSecret();
 
       const accessTokenPayload:IAuthTokenPayload = {
         userId,
         type: AuthTokenType.ACCESS,
       };
-      const accessToken = jwt.sign(accessTokenPayload, process.env.JWT_SECRET, {
+      const accessToken = jwt.sign(accessTokenPayload, jwtSecret, {
         expiresIn: "2h",
       });
 
@@ -86,7 +88,7 @@ export class AuthService {
         userId,
         type: AuthTokenType.REFRESH,
       };
-      const refreshToken = jwt.sign(refreshTokenPayload, process.env.JWT_SECRET, {
+      const refreshToken = jwt.sign(refreshTokenPayload, jwtSecret, {
         expiresIn: "7d",
       });
 

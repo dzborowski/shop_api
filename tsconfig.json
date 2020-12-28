@@ -7,10 +7,10 @@
     "target": "esnext",
     "module": "commonjs",
     "moduleResolution": "node",
+    "rootDir": "src",
     "outDir": "build",
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true
+    "experimentalDecorators": true
   },
-  "include": ["./src", "./ormconfig.ts","./types"]
+  "include": ["./src", "./types"]
 }

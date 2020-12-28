@@ -4,13 +4,14 @@ import * as express from "express";
 import * as helmet from "helmet";
 import * as bodyParser from "body-parser";
 import * as asyncHandler from "express-async-handler";
+import ormConfig from "./OrmConfig";
 import {UserRouter} from "./user/UserRouter";
 import {AuthRouter} from "./auth/AuthRouter";
 import {AuthService} from "./auth/AuthService";
 import {ErrorHandler} from "./common/ErrorHandler";
 import {ProductRouter} from "./product/ProductRouter";
 
-createConnection()
+createConnection(ormConfig)
     .then(() => {
       const app = express();
 
