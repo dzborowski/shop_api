@@ -10,6 +10,9 @@ import {AuthRouter} from "./auth/AuthRouter";
 import {AuthService} from "./auth/AuthService";
 import {ErrorHandler} from "./common/ErrorHandler";
 import {ProductRouter} from "./product/ProductRouter";
+import {AppConfig} from "./AppConfig";
+
+require("dotenv").config();
 
 createConnection(ormConfig)
     .then(() => {
@@ -25,8 +28,10 @@ createConnection(ormConfig)
 
       app.use(ErrorHandler.handleError);
 
-      app.listen(process.env.API_INNER_PORT, () => {
-        console.log(`App listening at http://localhost:${process.env.API_INNER_PORT}`);
+      const appPort = AppConfig.getAppPort();
+
+      app.listen(appPort, () => {
+        console.log(`App listening at http://localhost:${appPort}`);
       });
     })
     .catch((err) => console.error(`Database connection error: ${err}`));

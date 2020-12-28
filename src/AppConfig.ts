@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 export class AppConfig {
   public static getAppPort():number {
     return Number.parseInt(process.env.APP_PORT) || 3000;
