@@ -1,5 +1,6 @@
 import {AppConfig} from "./AppConfig";
 import {ConnectionOptions} from "typeorm/connection/ConnectionOptions";
+import {SnakeNamingStrategy} from "typeorm-naming-strategies";
 
 export default {
   type: "postgres",
@@ -16,4 +17,5 @@ export default {
   migrations: [
     "build/**/migrations/*.js",
   ],
+  namingStrategy: new SnakeNamingStrategy(),
 } as ConnectionOptions;

@@ -15,9 +15,9 @@ services:
     env_file:
       - .env
     volumes:
-      - shop_api_db:/var/lib/postgresql/data
+      - postgres_volume:/var/lib/postgresql/data
     ports:
       - '${POSTGRES_PORT}:${POSTGRES_PORT}'
 
 volumes:
-  shop_api_db:
+  postgres_volume:

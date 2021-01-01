@@ -30,7 +30,8 @@
     "pg": "^8.4.1",
     "reflect-metadata": "^0.1.13",
     "typeorm": "^0.2.28",
-    "typeorm-fixtures-cli": "^1.9.0"
+    "typeorm-fixtures-cli": "^1.9.0",
+    "typeorm-naming-strategies": "^2.0.0"
   },
   "scripts": {
     "dev:start": "nodemon --delay 10ms --watch ./build ./build/App.js",
