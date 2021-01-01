@@ -12,6 +12,7 @@ import {ErrorHandler} from "./common/ErrorHandler";
 import {ProductRouter} from "./product/ProductRouter";
 import {AppConfig} from "./AppConfig";
 import {BasketRouter} from "./basket/BasketRouter";
+import {OrderRouter} from "./order/OrderRouter";
 
 require("dotenv").config();
 
@@ -27,6 +28,7 @@ createConnection(ormConfig)
         app.use("/api/users", asyncHandler(AuthService.verifyAuth), UserRouter);
         app.use("/api/products", ProductRouter);
         app.use("/api/basket", asyncHandler(AuthService.verifyAuth), BasketRouter);
+        app.use("/api/order", asyncHandler(AuthService.verifyAuth), OrderRouter);
 
         app.use(ErrorHandler.handleError);
 

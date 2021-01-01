@@ -8,6 +8,7 @@ import {
     UpdateDateColumn,
 } from "typeorm";
 import {BasketEntity} from "../basket/BasketEntity";
+import {OrderedItemEntity} from "../order/OrderedItemEntity";
 
 @Entity({name: "product"})
 export class ProductEntity extends BaseEntity {
@@ -34,4 +35,7 @@ export class ProductEntity extends BaseEntity {
 
     @OneToMany(() => BasketEntity, (basket) => basket.product)
     public usersAddedProduct: BasketEntity[];
+
+    @OneToMany(() => OrderedItemEntity, (orderedItem) => orderedItem.order)
+    public orderedItems: OrderedItemEntity[];
 }
