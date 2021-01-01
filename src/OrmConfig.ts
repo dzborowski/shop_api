@@ -15,7 +15,7 @@ export default {
     "build/**/*.js",
   ],
   migrations: [
-    "build/**/migrations/*.js",
+    "build/migrations/*.js",
   ],
   namingStrategy: new SnakeNamingStrategy(),
 } as ConnectionOptions;
