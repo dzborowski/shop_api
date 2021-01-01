@@ -1,17 +1,12 @@
 import * as Joi from "joi";
 
 export class BasketRequestSchema {
-    public static getBasketParams = Joi.object().keys({
-      basketId: Joi.string().uuid().required(),
-    });
-
     public static addProductToBasketBody = Joi.object().keys({
       productId: Joi.string().uuid().required(),
-      basketId: Joi.string().uuid().required(),
+      productQuantity: Joi.number().greater(0).required(),
     });
 
     public static removeProductFromBasketBody = Joi.object().keys({
-      productId: Joi.string().uuid().required(),
-      basketId: Joi.string().uuid().required(),
+      basketItemId: Joi.string().uuid().required(),
     });
 }

@@ -30,6 +30,7 @@
     "no-unused-vars": "off",
     "require-jsdoc": "off",
     "new-cap": "off",
-    "no-undef": "off"
+    "no-undef": "off",
+    "newline-before-return": "error"
   }
 }

@@ -33,5 +33,5 @@ export class UserEntity extends BaseEntity {
   public updatedAt: Date;
 
   @OneToMany(() => BasketEntity, (basket) => basket.user)
-  public productsAddedToBasket!: BasketEntity[];
+  public productsAddedToBasket: BasketEntity[];
 }

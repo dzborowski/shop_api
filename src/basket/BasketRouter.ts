@@ -8,10 +8,7 @@ export const BasketRouter = Router();
 
 BasketRouter
     .route("/:basketId")
-    .get(
-        celebrate({params: BasketRequestSchema.getBasketParams}),
-        asyncHandler(BasketController.getProductsInBasket),
-    );
+    .get(asyncHandler(BasketController.getProductsInBasket));
 
 BasketRouter
     .route("/")

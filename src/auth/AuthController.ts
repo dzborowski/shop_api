@@ -1,5 +1,6 @@
 import {Request, Response} from "express";
 import {AuthService} from "./AuthService";
+import {HttpCode} from "../common/HttpCode";
 
 export class AuthController {
     public static register = async (req: Request, res: Response) => {
@@ -7,7 +8,7 @@ export class AuthController {
       const user = await authService.register(req.body);
 
       delete user.password;
-      res.json(user);
+      res.status(HttpCode.CREATED_SUCCESS).json(user);
     }
 
     public static login = async (req: Request, res: Response) => {
