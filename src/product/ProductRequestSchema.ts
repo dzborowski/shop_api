@@ -1,7 +1,7 @@
 import * as Joi from "joi";
 
-export class ProductSchema {
+export class ProductRequestSchema {
     public static getProductParams = Joi.object().keys({
-      id: Joi.string().uuid().required(),
+      productId: Joi.string().uuid().required(),
     });
 }

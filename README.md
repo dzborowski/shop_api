@@ -22,5 +22,5 @@ npx typeorm migration:run --config build/OrmConfig.js
 ##### Generate migration:
 
 ```
-npx typeorm migration:generate -n UserEntity -d src/user/migration --config build/OrmConfig.js
+npx typeorm migration:generate -n UserEntity -d src/user/migrations --config build/OrmConfig.js
 ```

@@ -1,2 +1,2 @@
 build
-src/**/migration/*.ts
+src/user/migrations/*.ts

@@ -14,6 +14,6 @@ export default {
     "build/**/*.js",
   ],
   migrations: [
-    "build/**/migration/*.js",
+    "build/**/migrations/*.js",
   ],
 } as ConnectionOptions;

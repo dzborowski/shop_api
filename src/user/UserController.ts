@@ -5,7 +5,7 @@ import {HttpCode} from "../common/HttpCode";
 export class UserController {
     public static getUser = async (req: Request, res: Response) => {
       const userService = new UserService();
-      const user = await userService.getUser(req.params.id);
+      const user = await userService.getUser(req.params.userId);
 
       if (user) {
         delete user.password;

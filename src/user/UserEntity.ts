@@ -1,4 +1,13 @@
-import {BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn} from "typeorm";
+import {
+    BaseEntity,
+    Column,
+    CreateDateColumn,
+    Entity,
+    OneToMany,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn,
+} from "typeorm";
+import {BasketEntity} from "../basket/BasketEntity";
 
 @Entity({name: "user"})
 export class UserEntity extends BaseEntity {
@@ -22,4 +31,7 @@ export class UserEntity extends BaseEntity {
 
   @UpdateDateColumn({type: "timestamp"})
   public updatedAt: Date;
+
+  @OneToMany(() => BasketEntity, (basket) => basket.user)
+  public productsAddedToBasket!: BasketEntity[];
 }
