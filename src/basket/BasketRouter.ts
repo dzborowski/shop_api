@@ -7,7 +7,7 @@ import {BasketRequestSchema} from "./BasketRequestSchema";
 export const BasketRouter = Router();
 
 BasketRouter
-    .route("/:basketId")
+    .route("/")
     .get(asyncHandler(BasketController.getProductsInBasket));
 
 BasketRouter
@@ -18,8 +18,8 @@ BasketRouter
     );
 
 BasketRouter
-    .route("/")
+    .route("/:basketItemId")
     .delete(
-        celebrate({body: BasketRequestSchema.removeProductFromBasketBody}),
-        asyncHandler(BasketController.removeProductFromBasket),
+        celebrate({params: BasketRequestSchema.removeProductFromBasketBody}),
+        asyncHandler(BasketController.removeItemFromBasket),
     );

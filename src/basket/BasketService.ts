@@ -6,13 +6,13 @@ import {ApiError} from "../common/ApiError";
 import {HttpCode} from "../common/HttpCode";
 
 export class BasketService {
-  public getItemsInBasket(userId:string):Promise<BasketEntity[]> {
+  public getProductsInBasket(userId:string):Promise<BasketEntity[]> {
     const basketRepository = getRepository(BasketEntity);
 
     return basketRepository.find({userId});
   }
 
-  public async addItemToBasket(productId:string, productQuantity:number, userId:string):Promise<BasketEntity> {
+  public async addProductToBasket(productId:string, productQuantity:number, userId:string):Promise<BasketEntity> {
     const userService = new UserService();
     const productService = new ProductService();
     const basketRepository = getRepository(BasketEntity);
@@ -23,7 +23,7 @@ export class BasketService {
       throw new ApiError({message: "User didn't exit", httpCode: HttpCode.NOT_FOUND});
     }
 
-    const isProductExist = await productService.isProductExist(userId);
+    const isProductExist = await productService.isProductExist(productId);
 
     if (!isProductExist) {
       throw new ApiError({message: "Product didn't exit", httpCode: HttpCode.NOT_FOUND});

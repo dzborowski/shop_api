@@ -97,7 +97,7 @@ export class AuthService {
 
     protected static getParsedToken(token:string):{type:string; credentials:string} {
       if (!token) {
-        throw new ApiError({message: "Token is missing.", httpCode: HttpCode.BAD_REQUEST});
+        throw new ApiError({message: "Auth token is missing.", httpCode: HttpCode.BAD_REQUEST});
       }
 
       const [type, credentials] = token.split(" ");
