@@ -6,11 +6,11 @@ interface IApiErrorData {
 }
 
 export class ApiError extends Error {
-  public errorData: IApiErrorData;
+    public errorData: IApiErrorData;
 
-  constructor(errorData:IApiErrorData) {
-    super(errorData.message);
+    constructor(errorData:IApiErrorData) {
+        super(errorData.message);
 
-    this.errorData = errorData;
-  }
+        this.errorData = errorData;
+    }
 }

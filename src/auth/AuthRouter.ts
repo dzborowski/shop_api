@@ -9,17 +9,17 @@ export const AuthRouter = Router();
 AuthRouter
     .route("/register")
     .post(celebrate({
-      body: AuthSchema.registerUserBody,
+        body: AuthSchema.registerUserBody,
     }), asyncHandler(AuthController.register));
 
 AuthRouter
     .route("/login")
     .post(celebrate({
-      body: AuthSchema.loginUserBody,
+        body: AuthSchema.loginUserBody,
     }), asyncHandler(AuthController.login));
 
 AuthRouter
     .route("/refresh")
     .post(celebrate({
-      body: AuthSchema.refreshUserBody,
+        body: AuthSchema.refreshUserBody,
     }), asyncHandler(AuthController.refresh));
