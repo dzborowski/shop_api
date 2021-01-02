@@ -81,7 +81,7 @@ export class AuthService {
             type: AuthTokenType.ACCESS,
         };
         const accessToken = jwt.sign(accessTokenPayload, jwtSecret, {
-            expiresIn: "2h",
+            // expiresIn: "2h",
         });
 
         const refreshTokenPayload:IAuthTokenPayload = {
@@ -89,7 +89,7 @@ export class AuthService {
             type: AuthTokenType.REFRESH,
         };
         const refreshToken = jwt.sign(refreshTokenPayload, jwtSecret, {
-            expiresIn: "7d",
+            // expiresIn: "7d",
         });
 
         return {accessToken, refreshToken};

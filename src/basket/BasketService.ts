@@ -6,12 +6,6 @@ import {ApiError} from "../common/ApiError";
 import {HttpCode} from "../common/HttpCode";
 
 export class BasketService {
-    public getProductsInBasket(userId:string):Promise<BasketEntity[]> {
-        const basketRepository = getRepository(BasketEntity);
-
-        return basketRepository.find({userId});
-    }
-
     public async addProductToBasket(productId:string, productQuantity:number, userId:string):Promise<BasketEntity> {
         const userService = new UserService();
         const productService = new ProductService();
@@ -36,8 +30,15 @@ export class BasketService {
         return basketRepository.save({productId, quantity: productQuantity, userId});
     }
 
-    public async removeItemFromBasket(basketItemId:string) {
+    public getProductsInBasket(userId:string):Promise<BasketEntity[]> {
         const basketRepository = getRepository(BasketEntity);
-        await basketRepository.delete(basketItemId);
+
+        return basketRepository.find({userId});
+    }
+
+    public async removeItemFromBasket(basketItemId:string, userId:string) {
+        const basketRepository = getRepository(BasketEntity);
+
+        await basketRepository.delete({id: basketItemId, userId});
     }
 }

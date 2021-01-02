@@ -23,8 +23,8 @@ export class BasketController {
 
     public static removeItemFromBasket = async (req:Request, res:Response) => {
         const basketService = new BasketService();
-        await basketService.removeItemFromBasket(req.params.basketItemId);
 
+        await basketService.removeItemFromBasket(req.params.basketItemId, req.user.id);
         res.status(HttpCode.NO_CONTENT_SUCCESS).end();
     }
 }

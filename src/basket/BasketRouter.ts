@@ -8,14 +8,14 @@ export const BasketRouter = Router();
 
 BasketRouter
     .route("/")
-    .get(asyncHandler(BasketController.getProductsInBasket));
-
-BasketRouter
-    .route("/")
     .post(
         celebrate({body: BasketRequestSchema.addProductToBasketBody}),
         asyncHandler(BasketController.addProductToBasket),
     );
+
+BasketRouter
+    .route("/")
+    .get(asyncHandler(BasketController.getProductsInBasket));
 
 BasketRouter
     .route("/:basketItemId")

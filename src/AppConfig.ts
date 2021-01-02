@@ -28,4 +28,8 @@ export class AppConfig {
     public static getDatabaseName():string {
         return process.env.POSTGRES_DB || "shop_api_db";
     }
+
+    public static isDevelopment():boolean {
+        return process.env.NODE_ENV === "development";
+    }
 }

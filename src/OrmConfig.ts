@@ -10,7 +10,7 @@ export default {
     password: AppConfig.getDatabasePassword(),
     database: AppConfig.getDatabaseName(),
     synchronize: false,
-    logging: false,
+    logging: AppConfig.isDevelopment(),
     entities: [
         "build/**/*.js",
     ],

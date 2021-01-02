@@ -5,7 +5,7 @@ import {ProductEntity} from "../product/ProductEntity";
 @Entity({name: "basket"})
 export class BasketEntity {
     @PrimaryGeneratedColumn("uuid")
-    public id: number;
+    public id: string;
 
     @Column()
     public userId: string;
