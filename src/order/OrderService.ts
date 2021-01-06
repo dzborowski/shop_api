@@ -50,7 +50,10 @@ export class OrderService {
     public getOrder(orderId:string, user:UserEntity):Promise<OrderEntity> {
         const orderRepository = getRepository(OrderEntity);
 
-        return orderRepository.findOne({id: orderId, user});
+        return orderRepository.findOne({
+            where: {id: orderId, user},
+            relations: ["orderedItems", "orderedItems.product"],
+        });
     }
 
     public getOrders( user:UserEntity):Promise<OrderEntity[]> {
