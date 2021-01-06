@@ -5,6 +5,7 @@ import {BasketEntity} from "../basket/BasketEntity";
 import {OrderedItemEntity} from "./OrderedItemEntity";
 import {ApiError} from "../common/ApiError";
 import {HttpCode} from "../common/HttpCode";
+import {ProductEntity} from "../product/ProductEntity";
 
 export class OrderService {
     public async createOrder(user:UserEntity):Promise<Partial<OrderEntity>> {
@@ -31,6 +32,20 @@ export class OrderService {
 
                 return orderedItem;
             });
+
+            for (const orderedItem of orderedItems) {
+                const product = await transactionalEntityManager.findOne(ProductEntity, {id: orderedItem.product.id});
+
+                if (orderedItem.quantity > product.availableCopiesQuantity) {
+                    throw new ApiError({
+                        message: "There is no enough available copies of product to create order with it.",
+                        httpCode: HttpCode.BAD_REQUEST,
+                    });
+                }
+
+                product.availableCopiesQuantity -= orderedItem.quantity;
+                await product.save();
+            }
 
             order.user = user;
             order.orderedItems = orderedItems;
