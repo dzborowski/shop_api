@@ -25,4 +25,11 @@ export class AuthController {
 
         res.json(authTokens);
     }
+
+    public static getLoggedUser = async (req: Request, res: Response) => {
+        const user = req.user;
+        delete req.user.password;
+
+        res.json(user);
+    }
 }

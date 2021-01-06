@@ -92,7 +92,10 @@ export class AuthService {
             // expiresIn: "7d",
         });
 
-        return {accessToken, refreshToken};
+        return {
+            accessToken: `${AuthService.AUTHORIZATION_TYPE} ${accessToken}`,
+            refreshToken: `${AuthService.AUTHORIZATION_TYPE} ${refreshToken}`,
+        };
     }
 
     protected static getParsedToken(token:string):{type:string; credentials:string} {
